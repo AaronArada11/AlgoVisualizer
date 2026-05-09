@@ -75,3 +75,33 @@ function doMerge(
     mainArray[k++] = auxiliaryArray[j++];
   }
 }
+
+
+export function quickSort (array, start, end) {
+    if (start >= end) {
+        return;
+    }
+    let Idx = partition(array, start, end);
+    quickSort(array, start, Idx - 1);
+    quickSort(array, Idx + 1, end);
+}
+
+function partition(array, start, end) {
+    let pivotIdx = start;
+    let pivotValue = array[end];
+    for (let i = start; i < end;i++) {
+      if (array[i] < pivotValue) {
+        swap(array, i, pivotIdx);
+        pivotIdx++;
+      }
+    }
+    swap(array, pivotIdx, end);
+    return pivotIdx;
+}
+
+function swap(array, a, b){
+  let temp = array[a];
+  array[a] = array[b];
+  array[b] = temp;
+
+}

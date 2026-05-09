@@ -1,7 +1,7 @@
 import React from "react";
 import '../App.css';
 import './SortingVisualizer.css';
-import * as sortingAlgorithms from '../sortingAlgorithms/sortingAlgorithms.js';
+import * as sortingAlgorithms from '../sortingAlgorithms/sortingAlgorithms';
 const ANIMATION_SPEED_MS = 3;
 const NUMBER_OF_ARRAY_BARS = 100;
 const PRIMARY_COLOR = '#aa3bff';
@@ -51,7 +51,9 @@ export class SortingVisualizer extends React.Component {
         }
     }
     quickSort() {
-
+        console.log('Array before quicksort:', this.state.array);
+        sortingAlgorithms.quickSort(this.state.array, 0, this.state.array.length - 1);
+        console.log('Array after quicksort:', this.state.array);
     }
     heapSort() {
 
