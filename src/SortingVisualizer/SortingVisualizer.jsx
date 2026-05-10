@@ -92,8 +92,13 @@ export class SortingVisualizer extends React.Component {
     }
 
     heapSort() {
-
+    const array = this.state.array.slice();
+    console.log("Unsorted array:", array);  
+    sortingAlgorithms.heapSort(array);
+    console.log("Sorted array:", array);  // Log the sorted copy
+    this.setState({array});
     }
+
     bubbleSort() {
 
     }
@@ -101,6 +106,9 @@ export class SortingVisualizer extends React.Component {
 
     }
     radixSort() {
+
+    }
+    insertionSort() {
 
     }
 
@@ -125,6 +133,7 @@ export class SortingVisualizer extends React.Component {
                 <button onClick={() => this.bubbleSort()}>Bubble Sort</button>
                 <button onClick={() => this.selectionSort()}>Selection Sort</button>
                 <button onClick={() => this.radixSort()}>Radix Sort</button>
+                <button onClick={() => this.insertionSort()}>Insertion Sort</button>
             </div>
         );
     }

@@ -1,3 +1,4 @@
+//mergesort sah
 export function getMergeSortAnimations(array) {
   const animations = [];
   if (array.length <= 1) return animations;
@@ -56,7 +57,7 @@ function doMerge(
   }
 }
 
-
+//quick sort boi parang quick silver
 export function getQuickSortAnimations (array) {
   const animations = [];
   if (array.length <= 1) return animations;
@@ -91,7 +92,7 @@ function partition(array, start, end, animations) {
     swap(array, pivotIdx, end);
     animations.push([pivotIdx, end]);
     animations.push([pivotIdx, end]);
-    
+
     animations.push([pivotIdx, array[pivotIdx]]);
     animations.push([end, array[end]]);
     return pivotIdx;
@@ -102,4 +103,35 @@ function swap(array, a, b){
   array[a] = array[b];
   array[b] = temp;
 
+}
+
+//heapsort ano ba yun
+function heapify (array, n, i) {
+  let largest = i;
+  let leftIdx = 2 * i + 1;
+  let rightIdx = 2 * i + 2;
+
+  if (leftIdx < n && array[leftIdx] > array[largest]){
+    largest = leftIdx;
+  }
+  if (rightIdx < n && array[rightIdx] > array[largest]){
+    largest = rightIdx;
+  }
+
+  if (largest != i) {
+    [array[i], array[largest]] = [array[largest], array[i]];
+    heapify(array, n, largest);
+  }
+}
+
+export function heapSort(array) {
+  let n = array.length;
+
+  for(let i = Math.floor(n / 2) - 1; i >= 0; i--) {
+    heapify(array, n, i);
+  }
+  for(let i = n - 1; i > 0; i--) {
+    [array[0], array[i]] = [array[i], array[0]];
+    heapify(array, i, 0)
+  }
 }
