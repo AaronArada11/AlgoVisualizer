@@ -51,10 +51,46 @@ export class SortingVisualizer extends React.Component {
         }
     }
     quickSort() {
-        console.log('Array before quicksort:', this.state.array);
-        sortingAlgorithms.quickSort(this.state.array, 0, this.state.array.length - 1);
-        console.log('Array after quicksort:', this.state.array);
+    const auxiliaryArray = this.state.array.slice();
+    const animations =
+        sortingAlgorithms.getQuickSortAnimations(auxiliaryArray);
+
+    for (let i = 0; i < animations.length; i++) {
+        const arrayBars = document.getElementsByClassName('array-bar');
+        const groupPos = i % 4;
+
+        if (groupPos === 0 || groupPos === 1) {
+
+        const [barOneIdx, barTwoIdx] = animations[i];
+
+        if (barOneIdx === -1 || barTwoIdx === -1) continue;
+
+        const barOneStyle = arrayBars[barOneIdx].style;
+        const barTwoStyle = arrayBars[barTwoIdx].style;
+
+        const color =
+            groupPos === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
+
+        setTimeout(() => {
+            barOneStyle.backgroundColor = color;
+            barTwoStyle.backgroundColor = color;
+        }, i * ANIMATION_SPEED_MS);
+
+        } else {
+
+        const [barIdx, newHeight] = animations[i];
+
+        if (barIdx === -1) continue;
+
+        const barStyle = arrayBars[barIdx].style;
+
+        setTimeout(() => {
+            barStyle.height = `${newHeight}px`;
+        }, i * ANIMATION_SPEED_MS);
+        }
     }
+    }
+
     heapSort() {
 
     }

@@ -32,70 +32,68 @@ function doMerge(
   let i = startIdx;
   let j = middleIdx + 1;
   while (i <= middleIdx && j <= endIdx) {
-    // These are the values that we're comparing; we push them once
-    // to change their color.
     animations.push([i, j]);
-    // These are the values that we're comparing; we push them a second
-    // time to revert their color.
     animations.push([i, j]);
     if (auxiliaryArray[i] <= auxiliaryArray[j]) {
-      // We overwrite the value at index k in the original array with the
-      // value at index i in the auxiliary array.
       animations.push([k, auxiliaryArray[i]]);
       mainArray[k++] = auxiliaryArray[i++];
     } else {
-      // We overwrite the value at index k in the original array with the
-      // value at index j in the auxiliary array.
       animations.push([k, auxiliaryArray[j]]);
       mainArray[k++] = auxiliaryArray[j++];
     }
   }
   while (i <= middleIdx) {
-    // These are the values that we're comparing; we push them once
-    // to change their color.
     animations.push([i, i]);
-    // These are the values that we're comparing; we push them a second
-    // time to revert their color.
     animations.push([i, i]);
-    // We overwrite the value at index k in the original array with the
-    // value at index i in the auxiliary array.
     animations.push([k, auxiliaryArray[i]]);
     mainArray[k++] = auxiliaryArray[i++];
   }
   while (j <= endIdx) {
-    // These are the values that we're comparing; we push them once
-    // to change their color.
     animations.push([j, j]);
-    // These are the values that we're comparing; we push them a second
-    // time to revert their color.
     animations.push([j, j]);
-    // We overwrite the value at index k in the original array with the
-    // value at index j in the auxiliary array.
     animations.push([k, auxiliaryArray[j]]);
     mainArray[k++] = auxiliaryArray[j++];
   }
 }
 
 
-export function quickSort (array, start, end) {
-    if (start >= end) {
-        return;
-    }
-    let Idx = partition(array, start, end);
-    quickSort(array, start, Idx - 1);
-    quickSort(array, Idx + 1, end);
+export function getQuickSortAnimations (array) {
+  const animations = [];
+  if (array.length <= 1) return animations;
+  quickSortHelper(array, 0, array.length -1, animations);
+  return animations;
 }
 
-function partition(array, start, end) {
+function quickSortHelper(array, start, end, animations) {
+      if (start >= end) {
+        return;
+    }
+    let pivotIdx = partition(array, start, end, animations);
+    quickSortHelper(array, start, pivotIdx - 1, animations);
+    quickSortHelper(array, pivotIdx + 1, end, animations);
+}
+function partition(array, start, end, animations) {
     let pivotIdx = start;
     let pivotValue = array[end];
     for (let i = start; i < end;i++) {
+      animations.push([i, end]);
+      animations.push([i, end]);
       if (array[i] < pivotValue) {
         swap(array, i, pivotIdx);
+        animations.push([i, array[i]]);
+        animations.push([pivotIdx, array[pivotIdx]]);
         pivotIdx++;
+      } else {
+        animations.push([-1,-1]);
+        animations.push([-1,-1]);
       }
     }
     swap(array, pivotIdx, end);
+    animations.push([pivotIdx, end]);
+    animations.push([pivotIdx, end]);
+    
+    animations.push([pivotIdx, array[pivotIdx]]);
+    animations.push([end, array[end]]);
     return pivotIdx;
 }
 
