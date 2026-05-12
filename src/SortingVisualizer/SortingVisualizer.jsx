@@ -120,7 +120,11 @@ export class SortingVisualizer extends React.Component {
 
 
     bubbleSort() {
-
+        const array = this.state.array.slice();
+        console.log("Unsorted array:", array);
+        sortingAlgorithms.bubbleSort(array);
+        console.log("Sorted array:", array);  
+        this.setState({array});
     }
     selectionSort() {
 
