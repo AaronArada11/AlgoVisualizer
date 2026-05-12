@@ -2,8 +2,8 @@ import React from "react";
 import '../App.css';
 import './SortingVisualizer.css';
 import * as sortingAlgorithms from '../sortingAlgorithms/sortingAlgorithms';
-const ANIMATION_SPEED_MS = 3;
-const NUMBER_OF_ARRAY_BARS = 100;
+const ANIMATION_SPEED_MS = 0.5;
+const NUMBER_OF_ARRAY_BARS = 620;
 const PRIMARY_COLOR = '#aa3bff';
 const SECONDARY_COLOR = 'red';
 export class SortingVisualizer extends React.Component {
@@ -22,7 +22,7 @@ export class SortingVisualizer extends React.Component {
     resetArray() {
         const array = [];
         for (let i = 0; i < NUMBER_OF_ARRAY_BARS; i++) {
-            array.push(randomIntFromInterval(5, 750));
+            array.push(randomIntFromInterval(5, 600));
         }
         this.setState({array});
     }
@@ -127,40 +127,59 @@ export class SortingVisualizer extends React.Component {
         this.setState({array});
     }
     selectionSort() {
-
+        const array = this.state.array.slice();
+        console.log("Unsorted array:", array);
+        sortingAlgorithms.selectionSort(array);
+        console.log("Sorted array:", array);  
+        this.setState({array});
     }
     radixSort() {
-
+        const array = this.state.array.slice();
+        console.log("Unsorted array:", array);
+        sortingAlgorithms.radixSort(array);
+        console.log("Sorted array:", array);  
+        this.setState({array});
     }
     insertionSort() {
-
+        const array = this.state.array.slice();
+        console.log("Unsorted array:", array);
+        sortingAlgorithms.insertionSort(array);
+        console.log("Sorted array:", array);  
+        this.setState({array});
     }
 
 
-    render() {
-        const {array} = this.state;
+     render() {
+         const {array} = this.state;
 
-        return (
-            <div className="array-container">
-                {array.map((value, idx) => (
-                    <div className="array-bar" 
-                    key={idx}
-                    style={{
-                    height: `${value}px`,
-                    backgroundColor: PRIMARY_COLOR,
-                    }}></div>
-                ))}
-                <button onClick={() => this.resetArray()}>Generate New Array</button>
-                <button onClick={() => this.mergeSort()}>Merge Sort</button>
-                <button onClick={() => this.quickSort()}>Quick Sort</button>
-                <button onClick={() => this.heapSort()}>Heap Sort</button>
-                <button onClick={() => this.bubbleSort()}>Bubble Sort</button>
-                <button onClick={() => this.selectionSort()}>Selection Sort</button>
-                <button onClick={() => this.radixSort()}>Radix Sort</button>
-                <button onClick={() => this.insertionSort()}>Insertion Sort</button>
-            </div>
-        );
-    }
+         return (
+             <div className="parent">
+                 <div className="div1">
+                     <button onClick={() => this.resetArray()}>Generate New Array</button>
+                     <button onClick={() => this.mergeSort()}>Merge Sort</button>
+                     <button onClick={() => this.quickSort()}>Quick Sort</button>
+                     <button onClick={() => this.heapSort()}>Heap Sort</button>
+                     <button onClick={() => this.bubbleSort()}>Bubble Sort</button>
+                     <button onClick={() => this.selectionSort()}>Selection Sort</button>
+                     <button onClick={() => this.radixSort()}>Radix Sort</button>
+                     <button onClick={() => this.insertionSort()}>Insertion Sort</button>
+                 </div>
+                 <div className="div2">
+                     {/* Future sliders */}
+                 </div>
+                 <div className="div3 array-container">
+                     {array.map((value, idx) => (
+                         <div className="array-bar" 
+                         key={idx}
+                         style={{
+                         height: `${value}px`,
+                         backgroundColor: PRIMARY_COLOR,
+                         }}></div>
+                     ))}
+                 </div>
+             </div>
+         );
+     }
 
 }
 //galing stackoverflow lmao
