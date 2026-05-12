@@ -106,7 +106,7 @@ function swap(array, a, b){
 }
 
 //heapsort ano ba yun
-function heapify (array, n, i) {
+function heapify (array, n, i, animations) {
   let largest = i;
   let leftIdx = 2 * i + 1;
   let rightIdx = 2 * i + 2;
@@ -119,19 +119,33 @@ function heapify (array, n, i) {
   }
 
   if (largest != i) {
+    animations.push([i, largest]);
+    animations.push([i, largest]);
     [array[i], array[largest]] = [array[largest], array[i]];
-    heapify(array, n, largest);
+    animations.push([i, array[i]]);
+    animations.push([largest, array[largest]]);
+    heapify(array, n, largest, animations);
   }
 }
 
-export function heapSort(array) {
-  let n = array.length;
+export function getHeapSortAnimations(array) {
+  const animations = [];
+  const tempArray = array.slice();
+  let n = tempArray.length;
 
   for(let i = Math.floor(n / 2) - 1; i >= 0; i--) {
-    heapify(array, n, i);
+    heapify(tempArray, n, i, animations);
   }
   for(let i = n - 1; i > 0; i--) {
-    [array[0], array[i]] = [array[i], array[0]];
-    heapify(array, i, 0)
+    animations.push([0, i]);
+    animations.push([0, i]);
+    [tempArray[0], tempArray[i]] = [tempArray[i], tempArray[0]];
+    animations.push([0, tempArray[0]]);
+    animations.push([i, tempArray[i]]);
+    
+    heapify(tempArray, i, 0, animations);
   }
+  return animations;
 }
+
+//bubble sort wow bubblesss
