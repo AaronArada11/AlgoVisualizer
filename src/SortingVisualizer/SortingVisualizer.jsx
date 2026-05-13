@@ -3,7 +3,7 @@ import '../App.css';
 import './SortingVisualizer.css';
 import * as sortingAlgorithms from '../sortingAlgorithms/sortingAlgorithms';
 const ANIMATION_SPEED_MS = 0.5;
-const NUMBER_OF_ARRAY_BARS = 620;
+const NUMBER_OF_ARRAY_BARS = 550;
 const PRIMARY_COLOR = '#aa3bff';
 const SECONDARY_COLOR = 'red';
 export class SortingVisualizer extends React.Component {
@@ -120,11 +120,30 @@ export class SortingVisualizer extends React.Component {
 
 
     bubbleSort() {
-        const array = this.state.array.slice();
-        console.log("Unsorted array:", array);
-        sortingAlgorithms.bubbleSort(array);
-        console.log("Sorted array:", array);  
-        this.setState({array});
+        const animations = sortingAlgorithms.getBubbleSortAnimations(this.state.array);
+        for (let i = 0; i < animations.length; i++) {
+        const arrayBars = document.getElementsByClassName('array-bar');
+        const groupPos = i % 4;  
+        
+        if (groupPos === 0 || groupPos === 1) {
+        const [barOneIdx, barTwoIdx] = animations[i];
+        const barOneStyle = arrayBars[barOneIdx].style;
+        const barTwoStyle = arrayBars[barTwoIdx].style;
+        const color = groupPos === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
+        
+        setTimeout(() => {
+            barOneStyle.backgroundColor = color;
+            barTwoStyle.backgroundColor = color;
+        }, i * ANIMATION_SPEED_MS);
+        } else {
+        const [barIdx, newHeight] = animations[i];
+        if (barIdx === -1) continue;
+        const barStyle = arrayBars[barIdx].style;
+        setTimeout(() => {
+            barStyle.height = `${newHeight}px`;
+        }, i * ANIMATION_SPEED_MS);
+        }
+    }
     }
     selectionSort() {
         const array = this.state.array.slice();
