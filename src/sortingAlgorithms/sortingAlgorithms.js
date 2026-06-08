@@ -172,3 +172,21 @@ export function getBubbleSortAnimations(array) {
 
   return animations;
 }
+
+
+//selection sort ikaw pinili ko hehe<3
+
+export function selectionSort(array) {
+  for(let i=0; i < array.length; i++) {
+    let low = i;
+    for(let j=i+1; j < array.length;j++){
+      if(array[low] > array[j]) {
+        low = j;
+      }
+    }
+    if(i !== low) {
+      [array[i],array[low]] = [array[low], array[i]];
+    }
+  }
+  return array;
+}

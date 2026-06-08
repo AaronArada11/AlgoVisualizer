@@ -2,8 +2,8 @@ import React from "react";
 import '../App.css';
 import './SortingVisualizer.css';
 import * as sortingAlgorithms from '../sortingAlgorithms/sortingAlgorithms';
-const ANIMATION_SPEED_MS = 0.5;
-const NUMBER_OF_ARRAY_BARS = 550;
+const ANIMATION_SPEED_MS = 3;
+const NUMBER_OF_ARRAY_BARS = 600;
 const PRIMARY_COLOR = '#aa3bff';
 const SECONDARY_COLOR = 'red';
 export class SortingVisualizer extends React.Component {
