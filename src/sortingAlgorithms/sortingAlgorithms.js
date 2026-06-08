@@ -175,20 +175,29 @@ export function getBubbleSortAnimations(array) {
 
 
 //selection sort ikaw pinili ko hehe<3
-
-export function selectionSort(array) {
-  for(let i=0; i < array.length; i++) {
-    let low = i;
-    for(let j=i+1; j < array.length;j++){
-      if(array[low] > array[j]) {
-        low = j;
+export function getSelectionSortAnimations(array) {
+  const animations = [];
+  const n = array.length;
+  for (let i = 0; i < n; i++) {
+    let minIdx = i;
+    for (let j = i + 1; j < n; j++) {
+      animations.push([minIdx, j]);
+      animations.push([minIdx, j]);
+      if (array[j] < array[minIdx]) {
+        minIdx = j;
       }
+      animations.push([-1, -1]);
+      animations.push([-1, -1]);
     }
-    if(i !== low) {
-      [array[i],array[low]] = [array[low], array[i]];
+    if (minIdx !== i) {
+      [array[i], array[minIdx]] = [array[minIdx], array[i]];
+      animations.push([i, minIdx]);
+      animations.push([i, minIdx]);
+      animations.push([i, array[i]]);
+      animations.push([minIdx, array[minIdx]]);
     }
   }
-  return array;
+  return animations;
 }
 
 //radix sort wow radix sort may niche
