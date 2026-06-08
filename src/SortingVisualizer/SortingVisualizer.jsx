@@ -155,9 +155,9 @@ export class SortingVisualizer extends React.Component {
     radixSort() {
         const array = this.state.array.slice();
         console.log("Unsorted array:", array);
-        sortingAlgorithms.radixSort(array);
-        console.log("Sorted array:", array);  
-        this.setState({array});
+        const sortedArray = sortingAlgorithms.radixSort(array);
+        console.log("Sorted array:", sortedArray);  
+        this.setState({array: sortedArray});
     }
     insertionSort() {
         const array = this.state.array.slice();

@@ -190,3 +190,59 @@ export function selectionSort(array) {
   }
   return array;
 }
+
+//radix sort wow radix sort may niche
+export function radixSort(array) {
+  const maxNUM = getMAX(array);
+  let sortedArray = [...array];
+
+  for (let exp = 1; Math.floor(maxNUM / exp) > 0; exp *= 10) {
+    sortedArray = countSort(sortedArray, exp);
+  }
+  return sortedArray;
+}
+
+function getMAX(array) {
+  const length = array.length;
+  let max = array[0];
+  for (let i = 1; i < length; i++){
+    if (array[i] > max) max = array[i];
+  }
+  return max;
+}
+
+function countSort(array, exp) {
+  const length = array.length;
+  
+  let output = new Array(length); 
+  let count = new Array(10).fill(0);
+
+  for (let i = 0; i < length; i++) {
+    const digit = Math.floor(array[i] / exp) % 10;
+    count[digit]++;
+  }
+
+  for (let i = 1; i < 10; i++) {
+    count[i] += count[i - 1];
+  }
+
+  for (let i = length - 1; i >= 0; i--) {
+    const digit = Math.floor(array[i] / exp) % 10;
+    output[count[digit] - 1] = array[i];
+    count[digit]--;
+  }
+  return output;
+}
+
+//instertion sort IPASOK MO UGHH
+export function insertionSort(array) {
+    for (let i = 1; i < array.length; i++) {
+        let key = array[i];
+        let j = i - 1;
+        while (j >= 0 && array[j] > key) {
+            array[j + 1] = array[j];
+            j = j - 1;
+        }
+        array[j + 1] = key;
+    }
+}
