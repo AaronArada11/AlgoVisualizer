@@ -201,29 +201,30 @@ export function getSelectionSortAnimations(array) {
 }
 
 //radix sort wow radix sort may niche
-export function radixSort(array) {
-  const maxNUM = getMAX(array);
+export function getRadixSortAnimations(array) {
+  const animations = [];
+  if (array.length <= 1) return animations;
   let sortedArray = [...array];
+  const maxNUM = getMAX(sortedArray);
 
   for (let exp = 1; Math.floor(maxNUM / exp) > 0; exp *= 10) {
-    sortedArray = countSort(sortedArray, exp);
+    sortedArray = countSort(sortedArray, exp, animations);
   }
-  return sortedArray;
+  return animations;
 }
 
 function getMAX(array) {
   const length = array.length;
   let max = array[0];
-  for (let i = 1; i < length; i++){
+  for (let i = 1; i < length; i++) {
     if (array[i] > max) max = array[i];
   }
   return max;
 }
 
-function countSort(array, exp) {
+function countSort(array, exp, animations) {
   const length = array.length;
-  
-  let output = new Array(length); 
+  let output = new Array(length);
   let count = new Array(10).fill(0);
 
   for (let i = 0; i < length; i++) {
@@ -240,6 +241,15 @@ function countSort(array, exp) {
     output[count[digit] - 1] = array[i];
     count[digit]--;
   }
+
+  for (let i = 0; i < length; i++) {
+    animations.push([i, i]);
+    animations.push([i, i]);
+    animations.push([i, output[i]]);
+    animations.push([i, output[i]]);
+    array[i] = output[i];
+  }
+
   return output;
 }
 
