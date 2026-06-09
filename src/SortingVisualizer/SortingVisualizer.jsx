@@ -197,11 +197,33 @@ export class SortingVisualizer extends React.Component {
         }
     }
     insertionSort() {
-        const array = this.state.array.slice();
-        console.log("Unsorted array:", array);
-        sortingAlgorithms.insertionSort(array);
-        console.log("Sorted array:", array);  
-        this.setState({array});
+        const animations = sortingAlgorithms.getInsertionSortAnimations(this.state.array.slice());
+        for (let i = 0; i < animations.length; i++) {
+            const arrayBars = document.getElementsByClassName('array-bar');
+            const groupPos = i % 4;
+
+            if (groupPos === 0 || groupPos === 1) {
+                const [barOneIdx, barTwoIdx] = animations[i];
+
+                if (!arrayBars[barOneIdx] || !arrayBars[barTwoIdx]) continue;
+
+                const barOneStyle = arrayBars[barOneIdx].style;
+                const barTwoStyle = arrayBars[barTwoIdx].style;
+                const color = groupPos === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
+
+                setTimeout(() => {
+                    barOneStyle.backgroundColor = color;
+                    barTwoStyle.backgroundColor = color;
+                }, i * ANIMATION_SPEED_MS);
+            } else {
+                const [barIdx, newHeight] = animations[i];
+                if (barIdx === -1) continue;
+                const barStyle = arrayBars[barIdx].style;
+                setTimeout(() => {
+                    barStyle.height = `${newHeight}px`;
+                }, i * ANIMATION_SPEED_MS);
+            }
+        }
     }
 
 
