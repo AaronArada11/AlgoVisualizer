@@ -45,6 +45,23 @@
     color: var(--text, #6b6375);
 }
 
+.slider-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.slider-container label {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.slider-container input[type="range"] {
+    width: 250px;
+    cursor: pointer;
+}
+
 .div3 {
     position: relative;
     width: 100%;
